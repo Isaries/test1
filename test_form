@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>問卷表單</title>
+</head>
+<body>
+  <h1>英聽問卷</h1>
+
+  <form id="quiz-form">
+    <div>
+      <p>題目1：這是什麼？</p>
+      <button type="button" onclick="document.getElementById('audio1').play()">播放音訊</button>
+      <audio id="audio1" src="https://example.com/audio1.mp3"></audio><br>
+      <input type="text" name="answer1" placeholder="請輸入答案">
+    </div>
+
+    <div>
+      <p>題目2：這是什麼？</p>
+      <button type="button" onclick="document.getElementById('audio2').play()">播放音訊</button>
+      <audio id="audio2" src="https://example.com/audio2.mp3"></audio><br>
+      <input type="text" name="answer2" placeholder="請輸入答案">
+    </div>
+
+    <br>
+    <button type="submit">提交</button>
+  </form>
+
+  <script>
+    document.getElementById('quiz-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => { data[key] = value });
+
+      await fetch('https://n8n.example.com/webhook/test-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      alert('提交成功，謝謝作答！');
+    });
+  </script>
+
+</body>
+</html>
